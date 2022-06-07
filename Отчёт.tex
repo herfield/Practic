@@ -1,0 +1,188 @@
+ \documentclass[12pt,a4paper]{scrartcl} 
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage{misccorr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\begin{document}
+{\LARGE \textit{Вариант 2}}\bigskip
+
+{\LARGE \textit{Тема: Генератор случайных чисел Парка-Миллера с перетасовкой и без.}}
+			
+\section{Ход работы}
+\label{sec:exp}
+
+\subsection{Код приложения}
+\label{sec:exp:code}
+\begin{verbatim}
+//Генератор случайных чисел Парка-Миллера с перетасовкой
+
+/*#include <stdio.h>
+#include <iostream>
+#define a 16807
+#define m 2147483647
+#define am (1.0/m)
+#define q 12773
+#define r 2836
+#define n 32
+#define w 8
+#define d (1+(m-1)/n)
+#define e 1.2e-7
+#define x (1.0-e)
+#define MASK 123456789
+
+static long t;
+
+void Seed(long t1)
+{
+	t = t1;
+}
+
+float unirand0(void)
+{
+	long k;
+	float ans;
+
+	t ^= MASK;
+	k = t / q;
+
+	if ((t = a * (t - k * q) - r * k) < 0)
+		t += m;
+
+	ans = am * t;
+
+	t ^= MASK;
+
+	return(ans);
+}
+
+float unirand1(void)
+{
+	int z;
+	long k;
+	static long y = 0, v[n];
+	float temp;
+
+
+	if (t <= 0 || !y)
+	{
+		if (t < 0)
+			t = -t;
+		else if (t == 0)
+			t = 1;
+
+		for (z = n + w - 1; z >= 0; z--)
+		{
+			k = t / q;
+
+			if ((t = a * (t - k * q) - r * k) < 0)
+				t += m;
+
+			if (z < n)
+				v[z] = t;
+		}
+
+
+		y = v[0];
+	}
+
+	k = t / q;
+	if ((t = a * (t - k * q) - r * k) < 0)
+		t += m;
+
+	y = v[z = y / d];
+	v[z] = t;
+
+
+	if ((temp = am * y) > x)
+		return(x);
+	else
+		return(temp);
+}
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	cout << "Генератор случайных чисел Парка-Миллера c перетасовкой" << endl;
+	int i;
+	Seed(6723);
+	for (i = 0; i < 100; i++)
+		printf("%f\n", unirand1());
+}*/
+
+//Генератор случайных чисел Парка-Миллера без перетасовки
+
+#include <stdio.h>
+#include <iostream>
+#define a 16807
+#define m 2147483647
+#define am (1.0/m)
+#define q 12773
+#define r 2836
+#define MASK 123456789
+
+static long t;
+
+void Seed(long t1)
+{
+	t = t1;
+}
+
+float unirand(void)
+{
+	long k;
+	float ans;
+
+	t ^= MASK;
+	k = t / q;
+
+	if ((t = a * (t - k * q) - r * k) < 0)
+		t += m;
+
+	ans = am * t;
+
+	t ^= MASK;
+
+	return(ans);
+}
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	cout << "Генератор случайных чисел Парка-Миллера без перетасовки" << endl;
+	int i;
+	Seed(6723);
+	for (i = 0; i < 100; i++)
+		printf("%f\n", unirand());
+}
+\end{verbatim}
+
+
+\section{Код в работающем состоянии}
+\label{sec:picexample}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.4\textwidth]{11.jpeg}
+	\caption{Генератор случайных чисел с перетасовкой}\label{fig:par}
+\end{figure}
+\label{sec:picexample}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.4\textwidth]{22.jpeg}
+	\caption{Генератор случайных чисел без перетасовки}\label{fig:par}
+\end{figure}
+
+\section{Библиографические ссылки}
+
+Для изучения «внутренностей» \TeX{} необходимо 
+изучить~\cite{andreyolegovich}, а для изучения Get лучше
+почитать~\cite{proglib.io}.Чтобы понять как работает генератор случайных чисел Парка-Миллера, нужно обратится к~\cite{q}. 
+
+\begin{thebibliography}{9}
+\bibitem{andreyolegovich}Изучение \LaTeX{}. https://www.andreyolegovich.ru/PC/LaTeX.phpbase
+\bibitem{proglib.io}Изучение Get. https://proglib.io/p/git-for-half-an-hour/    
+\bibitem{q}Генератор СЧ Парка-Миллера. https://algolist.manual.ru/maths/generator/parkmil.php
+\end{thebibliography}
+
+\end{document}
